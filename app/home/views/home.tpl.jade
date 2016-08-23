@@ -1,0 +1,42 @@
+md-content(flex)
+  md-toolbar(class='md-whiteframe-2dp' layout="row")
+    div(class='md-toolbar-tools')
+      h2
+        a(ui-sref='puzzle') {{ home.applicationName | ucfirst }}
+      span(flex)
+      span JAMO Solutions
+
+  md-card
+    md-content(layout="row")
+      div(flex="50" layout="column")
+        md-card()
+          md-grid-list(md-cols-gt-md="{{home.puzzleWidth}}" md-cols-sm="{{home.puzzleWidth}}" md-cols-md="{{home.puzzleWidth}}" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px")
+            md-grid-tile(ng-repeat="tile in home.letters" ng-style="{'background': tile.found ? tile.newlyFound ? 'red' : 'gray' : 'white'}" md-colspan-gt-sm="1" md-rowspan-gt-sm="1")
+              span {{ tile.letter }}
+      div(flex="50" layout="column")
+        md-card.md-padding
+          md-card-title
+            md-card-title-text
+              span.md-headline Search word in grid
+          md-card-content
+            md-input-container
+              label Word to search
+              input(ng-model="home.wordToSearch")
+            br
+            md-button.md-raised.md-primary(flex ng-click="home.searchWord()") Search Word
+        md-card.md-padding(ng-style="{'background': 'light-gray'}")
+          md-card-title
+            md-card-title-text
+              span.md-headline Create a new puzzle
+          md-card-content(flex)
+            md-input-container
+              label Puzzle width
+              input(type="number" ng-model="home.newPuzzleWidth")
+            br
+            md-input-container
+              label New puzzle letters
+              input(ng-model="home.newPuzzleLetters")
+            br
+            md-button.md-raised.md-primary(flex ng-click="home.createNewPuzzle()") Create New Puzzle
+
+        

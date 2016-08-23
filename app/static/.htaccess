@@ -1,0 +1,44 @@
+# RewriteEngine on
+# RewriteCond %{REQUEST_FILENAME} -s [OR]
+# RewriteCond %{REQUEST_FILENAME} -l [OR]
+# RewriteCond %{REQUEST_FILENAME} -d
+# RewriteRule ^.*$ - [NC,L]
+#
+# RewriteRule ^(.*) /index.html [NC,L]
+
+DirectoryIndex index.html
+# Options FollowSymlinks
+
+
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+
+    # Sets the HTTP_AUTHORIZATION header removed by apache
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # TODO : Check if served over https, if not, json should not be served over https
+    # RewriteCond %{HTTPS} !=on
+
+    # Check if domain specific configuration file is available (f.e. lpa-dispatch.antwerpen.be.json )
+    RewriteCond %{DOCUMENT_ROOT}/config/%{HTTP_HOST}.json -f
+
+    # If it is available, it wil load it. If not available, the default config is loaded (currently main.json)
+    RewriteRule ^(.*)main.json$ https://%{HTTP_HOST}/$1%{HTTP_HOST}.json [R=302,L]
+
+    # If the requested filename exists, simply serve it.
+    # We only want to let Apache serve files and not directories.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule .? - [L]
+
+    # Rewrite all other queries to the front controller.
+    RewriteRule .? %{ENV:BASE}/index.html [L]
+
+</IfModule>

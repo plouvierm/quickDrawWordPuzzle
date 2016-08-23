@@ -1,0 +1,38 @@
+doctype html
+//- html(lang='en' data-ng-app='mundomosa')
+html(lang='en')
+  head
+    title WordPuzzle
+    meta(name='viewport' content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE-edge')
+    base(href='/')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style' content='black')
+    link(rel='apple-touch-icon-precomposed' sizes='128x128' href='/touch-icon-128.png')
+    link(rel='apple-touch-icon-precomposed' sizes='196x196' href='/touch-icon-196.png')
+    meta(name='mobile-web-app-capable' content='yes')
+    link(rel='shortcut icon' sizes='196x196' href='/touch-icon-192.png')
+    link(rel='shortcut icon' sizes='128x128' href='/touch-icon-128.png')
+    link(rel='shortcut icon' href='/favicon.ico' type='image/x-icon')
+    link(rel='icon' href='images/favicon.png' type='image/png')
+
+
+    |<!-- inject:head:js -->
+    |<!-- endinject -->
+    |<!-- inject:html -->
+    |<!-- endinject -->
+    |<!-- bower:css -->
+    |<!-- endbower -->
+    |<!-- inject:css -->
+    |<!-- endinject -->
+  body(layout="column" ng-controller='HomeCtrl as home')
+    
+    ng-include(src="'home/views/navigation-top.tpl.html'")
+    md-content(layout='row' flex)
+      ui-view(layout="row" flex="100")
+
+    |<!-- bower:js -->
+    |<!-- endbower -->
+    |<!-- inject:js -->
+    |<!-- endinject -->

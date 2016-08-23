@@ -1,0 +1,26 @@
+md-toolbar(ng-show='showNavigation' class='md-whiteframe-2dp' layout="row")
+  div(class='md-toolbar-tools')
+    md-button(ui-sref="reporting" class='md-icon-button' ng-if='home.applicationIcon')
+      md-icon {{home.applicationIcon}}
+    h2
+      a(ui-sref='reporting') {{ home.applicationName | translate | ucfirst }}
+
+    span(flex)
+
+    md-menu(ng-if='user' md-position-mode="target-right target")
+        md-button(ng-click='$mdOpenMenu($event)')
+          | {{ user.username }}&nbsp;
+          md-icon(md-menu-origin) person
+        md-menu-content(width='4')
+          md-menu-item
+            md-button(ng-click='home.showUserContextSelector()')
+              md-icon people_outline
+              | {{ 'app.select-object' | translate | stringular:('app.user-context' | translate) | ucfirst }}
+          md-menu-item
+            md-button(ui-sref='user_account')
+              md-icon person_outline
+              | {{ 'app.account' | translate | ucfirst }}
+          md-menu-item
+            md-button(ui-sref='authentication.logout')
+              md-icon lock_open
+              | {{ 'app.logout' | translate | ucfirst }}
